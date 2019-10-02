@@ -1,0 +1,28 @@
+﻿<Window x:Class="WDXDespachoVillaAplicativo.MensajesTexto"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WDXDespachoVillaAplicativo"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:WDXDespachoVillaAplicativo.ViewModel.Mensajes"
+        Title="MensajesTexto" Height="600" Width="1200">
+    <Grid x:Name="GridMensajesTexto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="500"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" Margin="-45,-408,45,408">
+            <Label Content="{Binding LabelListado}"></Label>
+        </StackPanel>
+        <Label Grid.Column="0" Grid.Row="1" Content="Escriba el mensaje de whatsapp"></Label>
+        <TextBox AcceptsReturn="True" Style="{StaticResource TextBoxDespacho}" Grid.Row="1" AcceptsTab="True" TextWrapping="Wrap" MaxLines="100" Height="300" Grid.Column="1" Text="{Binding Texto}"></TextBox>
+        <Button Command="{Binding Comando}" Style="{StaticResource ButtonDespacho}"  Content="Enviar mensaje" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="1" CommandParameter="{Binding}"></Button>
+    </Grid>
+</Window>

@@ -1,0 +1,46 @@
+﻿<Window x:Class="WDXDespachoVillaAplicativo.Registro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WDXDespachoVillaAplicativo"
+        mc:Ignorable="d"
+        Title="Registro" Height="350" Width="525">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#241260" Offset="0.0"></GradientStop>
+                <GradientStop Color="White" Offset="1.5"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Foreground="White" Content="Elija un nombre de usuario:"></Label>
+        <Label Grid.Row="1" Foreground="White" Content="Elija una contraseña:"></Label>
+        <Label Grid.Row="2" Foreground="White" Content="Elija tres preguntas secretas:"></Label>
+        <Label Grid.Row="3" Foreground="White" x:Name="CuentaRespuestas" Content="Responda la pregunta secreta:"></Label>
+        <Button Command="{Binding Comando}" CommandParameter="{Binding}" Content="Registrar" Grid.Column="1" Grid.Row="5" Style="{StaticResource ButtonDespacho}"></Button>
+        <Button Click="buttonElijeRespuesta_Click"  x:Name="ResponderYContar" Content="Responder a la pregunta" Grid.Column="0" Grid.Row="5" Style="{StaticResource ButtonDespacho}"></Button>
+        <TextBox Text="{Binding Usuario.NombreUsuario}" Style="{StaticResource TextBoxDespacho}" Grid.Row="0" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Usuario.PasswordClaro}" Style="{StaticResource TextBoxDespacho}" Grid.Row="1" Grid.Column="1"></TextBox>
+        <ComboBox ItemsSource="{Binding PreguntasPorUsuario}" ItemContainerStyle="{StaticResource SingleSelectionComboBoxItem}"  x:Name="ComboPreguntasSecretas" Grid.Row="2" Grid.Column="1">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Pregunta}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBox Text="{Binding RespuestaElegida}" Style="{StaticResource TextBoxDespacho}" Grid.Row="3" Grid.Column="1"></TextBox>
+    </Grid>
+</Window>

@@ -1,0 +1,114 @@
+﻿@model List<Google.Apis.PeopleService.v1.Data.Person>
+@{
+    ViewBag.Title = "Agrega los contactos que deseas invitar a nuestras ofertas";
+}
+
+<h2>Bienvenido a tus contactos</h2>
+<h3>
+    Selecciona los contactos a los que desees que les enviemos un correo de invitación para conocer
+    la labor de nuestro despacho.
+</h3>
+<table class="table table-striped" id="tablaContactos">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>Nombre</th>
+            <th>Correos electrónicos</th>
+            <th>Teléfonos</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var Persona in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.CheckBox("CheckContacto", false, new { data_phone = String.Join(",", Persona.PhoneNumbers.Select(x => x.Value)) })
+                    </td>
+                    <td data-name="@Persona.Names[0].DisplayName">
+                        @Persona.Names[0].DisplayName
+                    </td>
+                    <td data-email="@String.Join(" ", Persona.EmailAddresses.Select(x => x.Value))">
+                        @String.Join(" ", Persona.EmailAddresses.Select(x => x.Value))
+                    </td>
+                    <td>
+                        @String.Join(", ", Persona.PhoneNumbers.Select(x => x.Value))
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <button class="btn btn-default" id="SaveContactos">
+            Guardar Cambios
+        </button>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#SaveContactos').click(function () {
+            var filas = $('#tablaContactos').find('input[type="checkbox"]:checked').length;
+            if (filas > 0) {
+                $('#modalMensajes #Cuerpo').html('<p>Ha decidido invitar a ' + filas + ' contactos. ¿Desea continuar?</p>');
+                $('#modalMensajes').modal('show');
+
+            }
+            else {
+                $('#modalMensajes #Cuerpo').html('<p>Seleccione algún contacto para continuar.</p>');
+                $('#modalMensajes').modal('show');
+            }
+            $('#modalMensajes #BtnAceptar').click(function () {
+                $('#modalMensajes').modal('hide');
+                if (filas > 0) {
+                    var model = [];
+                    var nombreCentinela = "";
+                    $('#tablaContactos tbody tr').each(function () {
+                        debugger;
+                        if ($(this).find('input[type="checkbox"]').is(':checked')) {
+                            var nombre = $(this).find('[data-name]').text().trim();
+                            var telefono = $(this).find('[data-phone]').data('phone').toString().split(',');
+                            var emails = $(this).find('[data-email]').data('email').split(' ');
+                            console.log(nombreCentinela);
+                            if (nombreCentinela != nombre) {
+                                nombreCentinela = nombre;
+                                $.each(telefono, function (k, v) {
+                                    var elem = {
+                                        NombreCompleto: nombre,
+                                        Telefono: v
+                                    };
+                                    model.push(elem);
+                                });
+                                $.each(emails, function (k, v) {
+                                    var elem = {
+                                        NombreCompleto: nombre,
+                                        Email: v
+                                    };
+                                    model.push(elem);
+                                });
+                            }
+                        }
+
+                    });
+                    console.log(model);
+                    $.ajax({
+                        url: "/Authorize/GuardarContactos",
+                        data: JSON.stringify(model),
+                        method: "POST",
+                        contentType: "application/json",
+                        success: function (response) {
+                            $('#modalMensajes #Cuerpo').html('<p>'+response.Mensaje+'</p>');
+                            $('#modalMensajes').modal('show');
+                            $('#tablaContactos').find('input[type="checkbox"]:checked').prop('disabled', true);
+                            $('#tablaContactos').find('input[type="checkbox"]:checked').prop('checked', false);
+                            filas = $('#tablaContactos').find('input[type="checkbox"]:checked').length;
+                        }
+                    })
+                }
+            });
+        });
+    </script>
+}

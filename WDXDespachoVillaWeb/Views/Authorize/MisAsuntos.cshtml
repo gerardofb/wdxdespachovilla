@@ -1,0 +1,357 @@
+﻿@using DTOWDXDespachoVilla.Asuntos;
+@model List<dtoAsuntos>
+@{
+    ViewBag.Title = "Mis Asuntos con el Despacho Jurídico";
+    dtoAsuntos AsuntoNuevo = Model.FirstOrDefault();
+    bool? ExitoArchivosDrive = ViewBag.ExitoAgregarArchivos;
+}
+
+<h2>Mis Asuntos</h2>
+<h3>Bienvenido, en esta sección puede crear asuntos con nuestro despacho y ver archivos y documentos asociados a estos asuntos.</h3>
+<div class="row">
+    <form class="needs-validation" novalidate>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Para comenzar, ingrese el nombre de un nuevo asunto (debe ser único y diferente a sus demás asuntos)</h4>
+            </div>
+            <div class="panel-body">
+                <div class="form-group col-md-12">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => AsuntoNuevo.Asunto, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => AsuntoNuevo.Asunto, new { @class = "form-control", @required = "required" })
+                        <div class="invalid-feedback">
+                            Por favor escriba un asunto válido, el asunto debe tener al menos 10 caracteres
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-md-offset-10">
+                    <button class="btn btn-default" id="btnCrearNuevoAsunto" type="submit">Crear</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">Si no dispone de Drive personal, puede subir sus archivos haciendo click en el botón "Subir local"</h4>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("UploadLocal", "Authorize", FormMethod.Post, new { enctype = "multipart/form-data", name="UploadLocal" }))
+                {
+                <div class="col-md-6 form-group">
+                    @Html.Hidden("IdAsunto")
+                    @Html.Hidden("Asunto")
+                    <label class="control-label col-md-6">Elija un archivo local:</label>
+                    <input type="file" class="col-md-6" multiple="multiple" name="archivos_locales" />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default" onclick="jsSubirArchivosLocal()">Subir local</button>
+                </div>
+                }
+                <div class="col-md-2">
+                    <button class="btn btn-default" onclick="jsSubirArchivosDrive()">Subir desde drive</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default" onclick="jsHabilitaDrive()">Habilitar Drive</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h4>Si desea subir archivos de su drive personal de Google, puede acceder haciendo click en el botón "Habilitar Drive"</h4>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="col-md-12">
+                    <div class="col-md-10">
+                        <h4>
+                            Los archivos aparecerán en esta sección, puede arrastrarlos a sus asuntos con el despacho para copiarlos o bien seleccionarlos y
+                            hacer click en el botón "Subir desde drive"
+                        </h4>
+                    </div>
+                    <div class="col-md-12" id="contentDrive">
+                        @if (Model.Where(x => x.Drive).Count() > 0)
+                        {
+                            <div class="col-md-12">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Seleccionar</th>
+                                            <th>Nombre del archivo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (dtoAsuntos ArchivoDrive in Model)
+                                        {
+                                            string Identificador = "ArchivoDrive_" + ArchivoDrive.GuidArchivo;
+                                            <tr id="@Identificador" draggable="true" ondragstart="dragArchivo(event)">
+                                                <td>@Html.CheckBox("CheckArchivo_" + ArchivoDrive.GuidArchivo, false)</td>
+                                                <td>
+                                                    @Html.Hidden("Hidden_DespachoVilla" + ArchivoDrive.NombreArchivo, ArchivoDrive.NombreArchivo)
+                                                    @ArchivoDrive.NombreArchivo
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" id="AsuntosCreados"></div>
+</div>
+@section scripts{
+    <script>
+
+        var DragEnabled = detectDrag();
+        $(document).ready(function () {
+            var ExitoSubidaDrive = @Html.Raw(Json.Encode(ExitoArchivosDrive));
+            $('form[name="UploadLocal"]').find('button').click(function(ev){
+                ev.preventDefault();
+            })
+            if(ExitoSubidaDrive != null && ExitoSubidaDrive){
+                $('#modalMensajes #Cuerpo').html('<p>Sus archivos se agregaron con éxito al asunto que eligió</p>');
+                $('#modalMensajes').modal('show');
+                $('#modalMensajes #BtnAceptar').click(function () {
+                    $('#modalMensajes').modal('hide');
+                });
+            }
+        });
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                GetAsuntos();
+                ScrollAbajo();           // Fetch all the forms we want to apply custom Bootstrap validation styles to
+
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        if (form.checkValidity() === false) {
+
+
+                        }
+                        if (!validar_Asunto("#AsuntoNuevo_Asunto")) {
+                            $('#AsuntoNuevo_Asunto').addClass("is-invalid");
+                            $('#AsuntoNuevo_Asunto').css({
+                                "border-color": "#dc3545",
+                                "padding-right": "calc(1.5em + 0.75rem)",
+                                "background-image": 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23dc3545\' viewBox=\'-2 -2 7 7\'%3e%3cpath stroke=\'%23dc3545\' d=\'M0 0l3 3m0-3L0 3\'/%3e%3ccircle r=\'.5\'/%3e%3ccircle cx=\'3\' r=\'.5\'/%3e%3ccircle cy=\'3\' r=\'.5\'/%3e%3ccircle cx=\'3\' cy=\'3\' r=\'.5\'/%3e%3c/svg%3E")',
+                                "background-repeat": "no-repeat",
+                                "background-position": "center right calc(0.375em + 0.1875rem)",
+                                "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                            });
+                        }
+                        else {
+                            $('#AsuntoNuevo_Asunto').removeClass("is-invalid").addClass("is-valid");
+                            $('#AsuntoNuevo_Asunto').css({
+                                "border-color": "#28a745",
+                                "padding-right": "calc(1.5em + 0.75rem)",
+                                "background-image": 'url(data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 8… 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z\'/%3e%3c/svg%3e)',
+                                "background-repeat": "no-repeat",
+                                "background-position": "center right calc(0.375em + 0.1875rem)",
+                                "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                            });
+                        }
+                        form.classList.add('was-validated');
+                        if (form.checkValidity() == false || validar_Asunto("#AsuntoNuevo_Asunto") == false) {
+                            return;
+                        }
+                        guardarAsunto("#AsuntoNuevo_Asunto");
+                    })
+                }, false)
+            }, false)
+        })();
+
+        function validar_Asunto(campo) {
+            if ($(campo).val().trim() == "" || $(campo).val().trim().length < 10)
+                return false;
+            return true;
+        }
+        function guardarAsunto(campo) {
+            var validacion = "No se puede crear este asunto con el despacho porque ya existe uno con el mismo nombre";
+            var model = { Asunto: { Asunto: $(campo).val().trim() } };
+            $('#modalMensajes #BtnAceptar').click(function () {
+                $('#modalMensajes').modal('hide');
+            });
+            console.log(model);
+            $.ajax({
+                url: "/Authorize/VerificaAsunto",
+                data: JSON.stringify(model),
+                method: "POST",
+                contentType: "application/json",
+                success: function (response) {
+                    if (response.Exito) {
+                        $.ajax({
+                            url: "/Authorize/GuardarAsunto",
+                            data: JSON.stringify(model),
+                            contentType: "application/json",
+                            method: "POST",
+                            success: function (respuesta) {
+                                $('#modalMensajes #Cuerpo').html('<p>' + respuesta.Mensaje + '</p>');
+                                $('#modalMensajes').modal('show');
+                                GetAsuntos();
+                            }
+                        })
+                    }
+                    else {
+                        $('#modalMensajes #Cuerpo').html('<p>' + validacion + '</p>');
+                        $('#modalMensajes').modal('show');
+                    }
+                }
+            });
+        }
+        function GetAsuntos() {
+            $('#AsuntosCreados').empty();
+            $.ajax({
+                url: '/Authorize/GetAsuntosPorUsuario',
+                method: "GET",
+                success: function (result) {
+                    $('#AsuntosCreados').html(result);
+                }
+            })
+        }
+
+        function jsHabilitaDrive() {
+            $.ajax({
+                url: '/Authorize/SolicitudPermisoDrive',
+                method: "GET",
+                contentType: "application/json",
+                success: function (response) {
+                    window.location.href = response;
+
+                }
+            })
+        }
+
+        function jsSubirArchivosLocal(){
+              var combo = $('#comboAsuntos').clone();
+            $('#modalMensajes #Cuerpo').html('<div class="col-md-12"><h4>Ha elegido cargar archivos a este asunto</h4></div><div id="contentCombo" class="col-md-12"><div class="col-md-12" id="error_combo" style="display:none; color:red"><span>Es necesario elegir un asunto</span></div></div>');
+            $('#modalMensajes').modal('show');
+            $('#modalMensajes #contentCombo').append(combo);
+            combo.show();
+            $('#modalMensajes #BtnAceptar').click(function () {
+                var idAsunto = $('#modalMensajes #SelectAsunto').val();
+                var Asunto = $('#modalMensajes #SelectAsunto option:selected').text();
+                if(idAsunto != "0"){
+                    $('#error_combo').hide();
+                    $('#modalMensajes').modal('hide');
+                    $('form[name="UploadLocal"]').find('input[name="IdAsunto"]').val(idAsunto);
+                    $('form[name="UploadLocal"]').find('input[name="Asunto"]').val(Asunto);
+                    $('form[name="UploadLocal"]').submit();
+                }
+                else{
+                    $('#error_combo').show();
+                }
+            });
+
+        }
+
+        function jsSubirArchivosDrive(){
+            var combo = $('#comboAsuntos').clone();
+            var Checados = [];
+            $('#modalMensajes #Cuerpo').html('<div class="col-md-12"><h4>Ha elegido subir los siguientes archivos de su drive:</h4></div><div id="contentCombo" class="col-md-12"><div class="col-md-12" id="error_combo" style="display:none; color:red"><span>Es necesario elegir un asunto</span></div></div><div style="overflow:auto"><table id="SubidaDrive"><tbody></tbody></table></div>');
+            $('#modalMensajes #BtnAceptar').click(function () {
+                var idAsunto = $('#modalMensajes #SelectAsunto').val();
+                if(idAsunto != "0"){
+                    $('#error_combo').hide();
+                    $.each(Checados, function(k,v){
+                        var fila = v.clone();
+                        fila.find('input[type="checkbox"]').remove()
+                        v.remove();
+                        $('#collapse'+idAsunto).find('.panel-body').append(fila);
+                    });
+                    $('#modalMensajes').modal('hide');
+                }
+                else{
+                    $('#error_combo').show();
+                }
+            });
+            $('#contentDrive').find('input[id^="CheckArchivo_"]:checked').each(function(){
+                var fila = $(this).parents('tr');
+                $('#modalMensajes #SubidaDrive tbody').append(fila);
+                Checados.push(fila);
+            });
+            $('#modalMensajes #contentCombo').append(combo);
+            combo.show();
+            $('#modalMensajes').modal('show');
+        }
+
+        function dragArchivo(ev) {
+            if (DragEnabled)
+                ev.dataTransfer.setData("Identificador", ev.target.id);
+        }
+        function allowDropArchivo(ev) {
+            if (DragEnabled)
+                ev.preventDefault();
+        }
+        function dropArchivo(ev) {
+            if (DragEnabled) {
+
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("Identificador");
+                ev.target.appendChild(document.getElementById(data));
+                var elemento = $(document.getElementById(data));
+                elemento.find('input[type="checkbox"]').remove();
+
+            }
+        }
+
+        function detectDrag() {
+            var iOs = !!navigator.userAgent.match('iPhone OS') || !!navigator.userAgent.match("iPad");
+            if (Modernizr.draganddrop && !iOs) {
+                console.log('arrastre habilitado');
+                return true;
+            }
+            else if (Modernizr.draganddrop && iOs) {
+                return true;
+            }
+            else return false;
+        }
+        function UploadDrive(Contenedor) {
+            var model = [];
+            var AsuntoContenedor = $('#' + Contenedor);
+            var IdAsunto = Contenedor.replace("collapse","");
+            var AsuntoModelo = AsuntoContenedor.find('#Asunto_Asunto').val();
+            AsuntoContenedor.find('tr').each(function () {
+                var elemento = $(this);
+                var NombreArchivo = elemento.find('input[name^="Hidden_DespachoVilla"]').attr('name').replace("Hidden_DespachoVilla","");
+                var GuidArchivo = elemento.attr('id').replace("ArchivoDrive_", "");
+
+                var archivo = { IdAsunto : IdAsunto, Asunto:AsuntoModelo, NombreArchivo: NombreArchivo, GuidArchivo: GuidArchivo };
+                model.push(archivo);
+            });
+            if(model.length > 0){
+                console.log(model);
+                $.ajax({
+                    url: '/Authorize/SolicitudPermisoDriveDownload',
+                    contentType: "application/json",
+                    data: JSON.stringify({Archivos:model}),
+                    method:"POST",
+                    success: function (response) {
+                        window.location.href = response.Redireccion;
+                    }
+                });
+            }
+        }
+    </script>
+}

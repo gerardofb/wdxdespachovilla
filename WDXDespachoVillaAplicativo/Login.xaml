@@ -1,0 +1,45 @@
+﻿<Window x:Class="WDXDespachoVillaAplicativo.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WDXDespachoVillaAplicativo"
+        xmlns:vm="clr-namespace:WDXDespachoVillaAplicativo.ViewModel.Usuarios"
+        mc:Ignorable="d"
+        Title="Login" Height="350" Width="525">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                <GradientStop Color="#241260" Offset="0.0"></GradientStop>
+                <GradientStop Color="White" Offset="1.5"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Grid.Column="0" Grid.ColumnSpan="2" Source="/Resources/LogoDespacho.png"></Image>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Row="1" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Label Grid.Row="1" Grid.Column="0" Content="Usuario" Foreground="White"></Label>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtBoxUsuario" Style="{StaticResource TextBoxDespacho}" Text="{Binding User}"></TextBox>
+                <Label Grid.Row="2" Grid.Column="0" Content="Contraseña" Foreground="White"></Label>
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txtBoxPassword" Style="{StaticResource TextBoxDespacho}" Text="{Binding Password}"></TextBox>
+                <Button Grid.Row="3" Grid.Column="1" Content="Ingresar" Style="{StaticResource ButtonDespacho}" Command="{Binding Comando}" CommandParameter="{Binding}"></Button>
+                <Button Grid.Row="3" Grid.Column="0" Content="Nuevo Registro" Style="{StaticResource ButtonDespacho}" Click="btnRegistroClick"></Button>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

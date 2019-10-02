@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-md-12" style="z-index:9990;margin-top:100px;">
+        <nav class="col-sm-3 col-md-3" id="myScrollspy">
+            <ul class="nav nav-pills nav-stacked" id="nav-principal" data-spy="affix" data-offset-top="800">
+                <li><a data-location="main1">Derecho Administrativo</a></li>
+                <li><a data-location="main2">Derecho civl</a></li>
+                <li><a data-location="main3">Derecho familiar</a></li>
+                <li><a data-location="main4">Derecho laboral</a></li>
+                <li><a data-location="main5">Derecho mercantil</a></li>
+                <li><a data-location="main6">Derecho penal</a></li>
+            </ul>
+        </nav>
+        <div class="col-sm-9 col-md-9">
+            <div id="main1" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Administrativo</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/administrativo_wdxvilla.jpg" />
+                </div>
+            </div>
+            <div id="main2" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Civil</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/civil_wdxvilla.jpg" />
+                </div>
+            </div>
+            <div id="main3" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Familiar</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/familiar_dos_wdxvilla.jpg" />
+                </div>
+            </div>
+            <div id="main4" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Laboral</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/laboral_wdxvilla.jpg" />
+                </div>
+            </div>
+            <div id="main5" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Mercantil</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/mercantil_wdxvilla.jpg" />
+                </div>
+            </div>
+            <div id="main6" class="col-md-12">
+                <div class="col-md-8">
+                    <h1 class="seccionesMain">Derecho Penal</h1>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/Main/penal_wdxvilla2.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $('#nav-principal li a').click(function (ev) {
+            ev.preventDefault();
+            var location = $(this).data('location');
+            var position = $('#'+location).offset();
+            console.log('position '+position.top);
+            $("html, body").animate({ scrollTop: position.top -50 }, 800);
+        })
+    </script>
+}

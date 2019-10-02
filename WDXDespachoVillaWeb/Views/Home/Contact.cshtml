@@ -1,0 +1,291 @@
+﻿@model WDXDespachoVillaWeb.Models.PersonaContacto
+@{
+    ViewBag.Title = "Contacto";
+}
+@*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">*@
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    Soria 46<br />
+    Álamos, CDMX 03340<br />
+    <abbr title="Teléfono">Tel:</abbr>
+    55 48-02-99-69
+</address>
+
+<address>
+    <strong>Contacto:</strong>   <a href="mailto:Support@example.com">juridicovilla@gmail.com</a><br />
+</address>
+<form class="needs-validation" novalidate>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Nombres:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Nombres, new { @class = "form-control", @required = "required" })
+                        <div class="invalid-feedback">
+                            Por favor escriba su nombre
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Apellido Paterno:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.ApellidoPaterno, new { @class = "form-control", @required = "required" })
+                        <div class="invalid-feedback">
+                            Por favor escriba su apellido paterno
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Apellido Materno:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.ApellidoMaterno, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Teléfono:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+                        <div class="invalid-feedback">
+                            Por favor escriba su teléfono a diez dígitos utilizando números y guiones
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Correo electrónico:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        <div class="invalid-feedback">
+                            Por favor escriba un correo electrónico válido
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Calle:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Calle, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Número exterior(*):</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.NumeroExterior, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Número interior:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.NumeroInterior, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Colonia:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Colonia, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Localidad:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.Localidad, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Entidad Federativa:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.EntidadFederativa, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Código Postal:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(m => m.CodigoPostal, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <label class="control-label" style="text-align:right">Mensaje:</label>
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextAreaFor(m => m.Mensaje, new { @class = "form-control", @required = "required" })
+                        <div class="invalid-feedback">
+                            Por favor escriba un mensaje
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">@Html.CheckBox("AceptaOfertas",false)</div>
+                        <div class="col-md-11" style="color:blue">Acepto recibir ofertas y notificaciones de parte de este sitio web.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-1">@Html.CheckBox("AceptaInvitaciones", false)</div>
+                        <div class="col-md-11"><strong style="color:crimson">Solicitamos tu apoyo para difundir nuestra labor.</strong> Invita a tus contactos a recibir notificaciones de este sitio web.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-10">
+                        <button class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            ScrollAbajo();
+            $('#CodigoPostal').val('');
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    if (form.checkValidity() === false) {
+
+
+                    }
+                    if (!validar_email("#Email")) {
+                        $('#Email').addClass("is-invalid");
+                        $('#Email').css({
+                            "border-color": "#dc3545",
+                            "padding-right": "calc(1.5em + 0.75rem)",
+                            "background-image": 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23dc3545\' viewBox=\'-2 -2 7 7\'%3e%3cpath stroke=\'%23dc3545\' d=\'M0 0l3 3m0-3L0 3\'/%3e%3ccircle r=\'.5\'/%3e%3ccircle cx=\'3\' r=\'.5\'/%3e%3ccircle cy=\'3\' r=\'.5\'/%3e%3ccircle cx=\'3\' cy=\'3\' r=\'.5\'/%3e%3c/svg%3E")',
+                            "background-repeat": "no-repeat",
+                            "background-position": "center right calc(0.375em + 0.1875rem)",
+                            "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                        });
+                    }
+                    else {
+                        $('#Email').addClass("is-valid").removeClass("is-invalid");
+                        $('#Email').css({
+                            "border-color": "#28a745",
+                            "padding-right": "calc(1.5em + 0.75rem)",
+                            "background-image": 'url(data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 8… 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z\'/%3e%3c/svg%3e)',
+                            "background-repeat": "no-repeat",
+                            "background-position": "center right calc(0.375em + 0.1875rem)",
+                            "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                        });
+                    }
+                    if (!validar_telefono('#Telefono') && $('#AceptaOfertas').is(":checked")) {
+                        $('#Telefono').addClass("is-invalid");
+                        $('#Telefono').css({
+                            "border-color": "#dc3545",
+                            "padding-right": "calc(1.5em + 0.75rem)",
+                            "background-image": 'url("data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23dc3545\' viewBox=\'-2 -2 7 7\'%3e%3cpath stroke=\'%23dc3545\' d=\'M0 0l3 3m0-3L0 3\'/%3e%3ccircle r=\'.5\'/%3e%3ccircle cx=\'3\' r=\'.5\'/%3e%3ccircle cy=\'3\' r=\'.5\'/%3e%3ccircle cx=\'3\' cy=\'3\' r=\'.5\'/%3e%3c/svg%3E")',
+                            "background-repeat": "no-repeat",
+                            "background-position": "center right calc(0.375em + 0.1875rem)",
+                            "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                        });
+                    }
+                    else if ($('#AceptaOfertas').is(":checked")) {
+                        $('#Telefono').addClass("is-valid").removeClass("is-invalid");
+                        $('#Telefono').css({
+                            "border-color": "#28a745",
+                            "padding-right": "calc(1.5em + 0.75rem)",
+                            "background-image": 'url(data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 8… 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z\'/%3e%3c/svg%3e)',
+                            "background-repeat": "no-repeat",
+                            "background-position": "center right calc(0.375em + 0.1875rem)",
+                            "background-size": "calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)"
+                        });
+                    }
+                    form.classList.add('was-validated');
+                    if (form.checkValidity() == false || validar_email("#Email") == false || (validar_telefono('#Telefono') == false && $('#AceptaOfertas').is(":checked"))) {
+                        return;
+                    }
+                    var modelo = {
+                        Nombres: $('#Nombres').val().trim(),
+                        ApellidoPaterno: $('#ApellidoPaterno').val().trim(),
+                        ApellidoMaterno: $('#ApellidoMaterno').val().trim(),
+                        Telefono: $('#Telefono').val().trim(),
+                        Email: $('#Email').val().trim(),
+                        Calle: $('#Calle').val().trim(),
+                        NumeroExterior: $('#NumeroExterior').val().trim(),
+                        NumeroInterior: $('#NumeroInterior').val().trim(),
+                        Colonia: $('#Colonia').val().trim(),
+                        Localidad: $('#Localidad').val().trim(),
+                        EntidadFederativa: $('#EntidadFederativa').val().trim(),
+                        CodigoPostal: $('#CodigoPostal').val().trim(),
+                    }
+                    var ErrorGenerico = "Ha ocurrido un error inesperado";
+                    var Exito = "Su mensaje se recibió con éxito";
+                    var AceptarOfertas = $('#AceptaOfertas').is(":checked");
+                    var InvitarUsuarios = $('#AceptaInvitaciones').is(":checked");
+                    $.ajax({
+                        url: "/Home/SolicitudPermiso",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ Persona: modelo, Mensaje: $('#Mensaje').val(), AceptarOfertas:AceptarOfertas, InvitarUsuarios:InvitarUsuarios }),
+                        success: function (response) {
+                            if (response.indexOf(ErrorGenerico) == -1 && response.indexOf(Exito) == -1)
+                                window.location.href = response;
+                            else if(response.indexOf(Exito) != -1)
+                            {
+                                $('#modalMensajes #Cuerpo').html('<p>' + Exito + '</p>');
+                                $('#modalMensajes').modal('show');
+                                $('#modalMensajes #BtnAceptar').click(function () {
+                                    $('#modalMensajes').modal('hide');
+                                });
+                            }
+                            else {
+                                $('#modalMensajes #Cuerpo').html('<p>' + ErrorGenerico + '</p>');
+                                $('#modalMensajes').modal('show');
+                                $('#modalMensajes #BtnAceptar').click(function () {
+                                    $('#modalMensajes').modal('hide');
+                                });
+                            }
+                        }
+                    });
+                }, false);
+            });
+        }, false);
+    })();
+
+    function validar_email(campo) {
+        var regex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$");
+        return regex.test($(campo).val().trim());
+    }
+
+    function validar_telefono(campo) {
+        var regex = /^\d{2}\-\d{2}\-\d{2}\-\d{2}\-\d{2}$/;
+        return regex.test($(campo).val().trim());
+    }
+</script>

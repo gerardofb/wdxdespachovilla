@@ -1,0 +1,52 @@
+﻿@using DTOWDXDespachoVilla.Asuntos;
+@model List<dtoAsuntos>
+@{
+    List<dtoAsuntos> Archivos = ViewBag.Archivos == null ? new List<dtoAsuntos>() : (List<dtoAsuntos>)ViewBag.Archivos;
+    List<SelectListItem> ComboAsuntos = ViewBag.ComboAsuntos == null ? new List<SelectListItem>() : (List<SelectListItem>)ViewBag.ComboAsuntos;
+}
+<div class="container">
+    @if (Model != null)
+    {
+        foreach (dtoAsuntos Asunto in Model)
+        {
+            string identificador = "collapse" + Asunto.IdAsunto;
+            string boton = "btn_" + Asunto.IdAsunto;
+            <div data-asunto="@Asunto.IdAsunto">
+
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#@identificador">@Asunto.Asunto</a>
+                            </h4>
+                        </div>
+                        <div id="@identificador" class="panel-collapse collapse in" ondrop="dropArchivo(event)" ondragover="allowDropArchivo(event)">
+                            @Html.HiddenFor(m => Asunto.Asunto)
+                            <div class="panel-body" style="min-height:200px;">
+                                @foreach (dtoAsuntos Archivo in Archivos.Where(x=> x.IdAsunto == Asunto.IdAsunto))
+                                {
+                                    <div class="col-md-12">
+                                        @Archivo.NombreArchivo
+                                    </div>
+                                }
+                            </div>
+                            <div class="panel-footer">
+                                <button id="@boton" onclick="UploadDrive('@identificador')">Cargar archivos a este asunto</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<div style="display:none" id="comboAsuntos">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">Seleccione el asunto al que agregará estos archivos:</h4>
+        </div>
+        <div class="panel-body">
+            @Html.DropDownList("SelectAsunto", ComboAsuntos, new { @class = "form-control" })
+        </div>
+    </div>
+</div>

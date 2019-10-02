@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="WDXDespachoVillaAplicativo.UcDirectorio"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WDXDespachoVillaAplicativo"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button x:Name="btnAgregaDirectorio" Style="{StaticResource ButtonDespacho}" Grid.Row="0" Click="btnAgregaDirectorio_Click" Width="70" HorizontalAlignment="Right">Agregar</Button>
+        <DataGrid x:Name="GridPersonas" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Checked="CheckPersonaMensaje" Unchecked="UncheckPersonaMensaje" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Nombres}" Header="Nombres"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Apellidos}" Header="Apellidos"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Direccion}" Header="Calle y no." Width="275"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Colonia}" Header="Colonia"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Localidad}" Header="Localidad"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Telefono}" Header="Teléfono"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Click="EnviarMensaje_Click" Style="{StaticResource ButtonDespacho}" Grid.Row="2" Content="Enviar Mensaje de Whatsapp" Width="200" HorizontalAlignment="Right"></Button>
+    </Grid>
+</UserControl>

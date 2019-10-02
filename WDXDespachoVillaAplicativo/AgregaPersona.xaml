@@ -1,0 +1,55 @@
+﻿<Window x:Class="WDXDespachoVillaAplicativo.AgregaPersona"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WDXDespachoVillaAplicativo"
+        mc:Ignorable="d"
+        Title="AgregaPersona" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource TextBoxDespacho}" Text="{Binding Nombres}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxDespacho}" Text="{Binding ApellidoPaterno}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxDespacho}" Text="{Binding ApellidoMaterno}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="3" Style="{StaticResource TextBoxDespacho}" Text="{Binding Calle}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxDespacho}" Text="{Binding NumeroExterior}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBoxDespacho}" Text="{Binding NumeroInterior}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxDespacho}" Text="{Binding Colonia}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="7" Style="{StaticResource TextBoxDespacho}" Text="{Binding Localidad}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource TextBoxDespacho}" Text="{Binding EntidadFederativa}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="9" Style="{StaticResource TextBoxDespacho}" Text="{Binding CodigoPostal}"></TextBox>
+        <TextBox Grid.Column="1" Grid.Row="10" Style="{StaticResource TextBoxDespacho}" Text="{Binding Telefono}"></TextBox>
+
+
+
+        <Label Grid.Column="0" Grid.Row="0">Nombre(s)</Label>
+        <Label Grid.Column="0" Grid.Row="1">Apellido Paterno</Label>
+        <Label Grid.Column="0" Grid.Row="2">ApellidoMaterno</Label>
+        <Label Grid.Column="0" Grid.Row="3">Calle</Label>
+        <Label Grid.Column="0" Grid.Row="4">Número Exterior</Label>
+        <Label Grid.Column="0" Grid.Row="5">Número Interior</Label>
+        <Label Grid.Column="0" Grid.Row="6">Colonia</Label>
+        <Label Grid.Column="0" Grid.Row="7">Localidad</Label>
+        <Label Grid.Column="0" Grid.Row="8">Entidad Federativa</Label>
+        <Label Grid.Column="0" Grid.Row="9">Código Postal</Label>
+        <Label Grid.Column="0" Grid.Row="10">Teléfono (celular)</Label>
+        <Button Grid.Column="1" Grid.Row="11" Command="{Binding Comando}" Style="{StaticResource ButtonDespacho}" CommandParameter="{Binding}" HorizontalAlignment="Right" Width="70">Agregar</Button>
+    </Grid>
+</Window>
