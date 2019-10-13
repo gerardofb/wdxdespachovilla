@@ -43,6 +43,11 @@ namespace WDXDespachoVillaAplicativo.ViewModel
                         ucDescargaArchivosAsuntos ventanaArchivos = new ucDescargaArchivosAsuntos();
                         instanciaViewModel.ventanaPadre.Contenedor.Children.Add(ventanaArchivos);
                         break;
+                    case 3:
+                        instanciaViewModel.ventanaPadre.Contenedor.Children.Clear();
+                        ucAdminSecciones ventanaSecciones = new ucAdminSecciones();
+                        instanciaViewModel.ventanaPadre.Contenedor.Children.Add(ventanaSecciones);
+                        break;
                 }
             }
         }

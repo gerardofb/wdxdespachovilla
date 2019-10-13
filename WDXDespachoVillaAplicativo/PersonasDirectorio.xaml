@@ -26,9 +26,10 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_Directorio">
                     <MenuItem Header="Directorio de _Personas" Command="{Binding CmdNavegar}" CommandParameter="0"></MenuItem>
-                    <MenuItem Header="_Directorio de Asuntos" Command="{Binding CmdNavegar}" CommandParameter="2"></MenuItem>
+                    <MenuItem Header="Directorio de A_suntos" Command="{Binding CmdNavegar}" CommandParameter="2"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Buzon" Command="{Binding CmdNavegar}" CommandParameter="1"></MenuItem>
+                <MenuItem Header="_Administrar Secciones" Command="{Binding CmdNavegar}" CommandParameter="3"></MenuItem>
             </Menu>
         </DockPanel>
         <Image Source="/Resources/LogoDespacho.png" Width="200" Grid.Row="1" Grid.Column="0"></Image>

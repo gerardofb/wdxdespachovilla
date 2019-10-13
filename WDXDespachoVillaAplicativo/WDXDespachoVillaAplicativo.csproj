@@ -93,6 +93,9 @@
     <Compile Include="Registro.xaml.cs">
       <DependentUpon>Registro.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ucAdminSecciones.xaml.cs">
+      <DependentUpon>ucAdminSecciones.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ucBuzonAutomatico.xaml.cs">
       <DependentUpon>ucBuzonAutomatico.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,7 @@
     <Compile Include="ViewModel\Buzon\VMBuzon.cs" />
     <Compile Include="ViewModel\Mensajes\VMMensajes.cs" />
     <Compile Include="ViewModel\Personas\VMPersonas.cs" />
+    <Compile Include="ViewModel\Secciones\VMSecciones.cs" />
     <Compile Include="ViewModel\Usuarios\VMPreguntasAcceso.cs" />
     <Compile Include="ViewModel\Usuarios\VMUsuarios.cs" />
     <Compile Include="ViewModel\VMBase.cs" />
@@ -124,6 +128,10 @@
     <Page Include="Registro.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ucAdminSecciones.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ucBuzonAutomatico.xaml">
       <SubType>Designer</SubType>

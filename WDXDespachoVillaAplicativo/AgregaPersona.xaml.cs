@@ -15,6 +15,19 @@ using WDXDespachoVillaAplicativo.ViewModel.Personas;
 
 namespace WDXDespachoVillaAplicativo
 {
+    public class ValidacionPersona : System.Windows.Controls.ValidationRule
+    {
+        public override System.Windows.Controls.ValidationResult Validate(object value, System.Globalization.CultureInfo Cultura)
+       {
+            string valor = (string)value;
+            valor = valor.Trim();
+            if (String.IsNullOrEmpty(valor))
+            {
+                return new System.Windows.Controls.ValidationResult(false, "Este campo es obligatorio");
+            }
+            return System.Windows.Controls.ValidationResult.ValidResult;
+        }
+    }
     /// <summary>
     /// Interaction logic for AgregaPersona.xaml
     /// </summary>

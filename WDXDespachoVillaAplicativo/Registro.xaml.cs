@@ -89,7 +89,7 @@ namespace WDXDespachoVillaAplicativo
                 if(viewModel.CuentaPreguntas >=3)
                 {
                     this.ResponderYContar.IsEnabled = false;
-                    this.CuentaRespuestas.Content = @"Ha respondido todas las preguntas requeridas, puede registrarse ahora";
+                    this.CuentaRespuestas.Content = @"Ha respondido todas las preguntas requeridas.";
                 }
             }
         }

@@ -14,6 +14,10 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Usuarios
 {
     public class VMPreguntasUsuario : VMBase
     {
+        public VMPreguntasUsuario()
+        {
+            this.Usuario = new VMUsuarioAplicativo();
+        }
         private string _RespuestaElegida;
         public string RespuestaElegida { get { return _RespuestaElegida; } set { _RespuestaElegida = value; OnPropertyChanged("RespuestaElegida"); } }
         public int CuentaPreguntas { get; set; }
@@ -44,7 +48,7 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Usuarios
                             BackgroundWorker worker = new BackgroundWorker();
                             worker.DoWork += new DoWorkEventHandler(GuardaUsuarioDoWork);
                             worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(GuardaUsuarioCompleted);
-                            //worker.RunWorkerAsync();
+                            worker.RunWorkerAsync();
                         }
                         else
                         {
@@ -88,7 +92,7 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Usuarios
                     worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(GuardaPreguntasUsuarioCompleted);
                     worker.RunWorkerAsync();
 
-                    MessageBox.Show(DTOWDXDespachoVilla.Constantes.ConstantesComunes.EXITO_GENERICO);
+                    //MessageBox.Show(DTOWDXDespachoVilla.Constantes.ConstantesComunes.EXITO_GENERICO);
                 }
                 else
                 {
@@ -101,7 +105,7 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Usuarios
                 try
                 {
                     List<dtoPreguntasUsuarios> ListaPreguntas = new List<dtoPreguntasUsuarios>();
-                    foreach (VMPreguntasAcceso Preguntas in viewModelPadre.PreguntasPorUsuario)
+                    foreach (VMPreguntasAcceso Preguntas in viewModelPadre.PreguntasPorUsuario.Where(x=> !String.IsNullOrEmpty(x.Respuesta)))
                     {
                         ListaPreguntas.Add(new dtoPreguntasUsuarios
                         {
@@ -115,7 +119,8 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Usuarios
                             Pregunta = new dtoPreguntasAcceso
                             {
                                 IdPregunta = Preguntas.IdPregunta,
-                                Pregunta = Preguntas.Pregunta
+                                Pregunta = Preguntas.Pregunta,
+                                Respuesta = Preguntas.Respuesta
                             }
                         });
                     }

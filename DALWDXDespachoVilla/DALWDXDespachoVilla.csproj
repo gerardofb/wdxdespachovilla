@@ -44,6 +44,7 @@
     <Compile Include="Asuntos\DALAsuntos.cs" />
     <Compile Include="Personas\DALPersonas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Secciones\DALSecciones.cs" />
     <Compile Include="Usuarios\DALUsuarios.cs" />
   </ItemGroup>
   <ItemGroup>

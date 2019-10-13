@@ -54,7 +54,7 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Mensajes
                     if(viewModelPadre.ventana != null)
                     {
                         string Telefono = Persona.Telefono;
-                        Regex patron = new Regex(@"[\(\)\+\-]");
+                        Regex patron = new Regex(@"[\(\)\+\-\s]");
                         Telefono = patron.Replace(Telefono, "");
                         string TextoEnc = System.Web.HttpUtility.UrlEncode(Texto);
                         Regex patronLada = new Regex(@"^521\d+$");

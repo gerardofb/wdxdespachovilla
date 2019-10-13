@@ -128,6 +128,7 @@ namespace WDXDespachoVillaWeb.Controllers
             RequestListado.PersonFields = "names,emailAddresses,phoneNumbers";
             var response = RequestListado.Execute();
             IList<Person> ListadoContactos = response.Connections;
+            if(ListadoContactos != null)
             ListadoContactos = ListadoContactos.Where(x => x.PhoneNumbers != null && x.EmailAddresses != null && x.Names != null).ToList();
             Session["TokenPeople"] = tokenJson;
             Session["ListadoContactos"] = ListadoContactos;

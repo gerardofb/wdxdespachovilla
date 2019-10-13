@@ -45,10 +45,13 @@
     <Compile Include="Constantes\ConstantesAsuntos.cs" />
     <Compile Include="Constantes\ConstantesComunes.cs" />
     <Compile Include="Constantes\ConstantesPersonas.cs" />
+    <Compile Include="Constantes\ConstantesSecciones.cs" />
     <Compile Include="Constantes\ConstantesUsuarios.cs" />
     <Compile Include="dtoUsuarios.cs" />
     <Compile Include="Personas\dtoPersonas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Secciones\dtoCatSecciones.cs" />
+    <Compile Include="Secciones\dtoSeccion.cs" />
     <Compile Include="Usuarios\PreguntasUsuarios.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

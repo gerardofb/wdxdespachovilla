@@ -21,6 +21,7 @@ namespace DALWDXDespachoVilla.Usuarios
                 DataTable DtPreguntas = new DataTable();
                 DtPreguntas.Columns.Add("IdUsuario", typeof(int));
                 DtPreguntas.Columns.Add("IdPregunta", typeof(int));
+                DtPreguntas.Columns.Add("Respuesta", typeof(string));
 
                 if (PreguntasUsuario != null)
                 {
@@ -28,7 +29,8 @@ namespace DALWDXDespachoVilla.Usuarios
                     {
                         DataRow row = DtPreguntas.NewRow();
                         row["IdUsuario"] = Pregunta.Usuario.IdUsuario;
-                        row["IdPregunta"] = Pregunta.Usuario.IdUsuario;
+                        row["IdPregunta"] = Pregunta.Pregunta.IdPregunta;
+                        row["Respuesta"] = Pregunta.Pregunta.Respuesta;
                         DtPreguntas.Rows.Add(row);
                     }
                 }
@@ -42,6 +44,7 @@ namespace DALWDXDespachoVilla.Usuarios
                     SqlParameter ParamPregunta = Cmd.Parameters.AddWithValue("@UsuariosPreguntas", DtPreguntas);
                     SqlParameter ParamResult = new SqlParameter("@Result", SqlDbType.VarChar, -1);
                     ParamResult.Direction = ParameterDirection.Output;
+                    Cmd.Parameters.Add(ParamResult);
                     ParamPregunta.SqlDbType = SqlDbType.Structured;
                     ParamPregunta.TypeName = "dbo.tipoPreguntasUsuariosWDXDespachoVilla";
                     Cmd.ExecuteNonQuery();
