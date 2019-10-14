@@ -15,6 +15,8 @@ using System.Configuration;
 using System.Threading;
 using System.IO;
 using Newtonsoft.Json;
+using BALWDXDespachoVilla.Secciones;
+using DTOWDXDespachoVilla.Secciones;
 
 namespace WDXDespachoVillaWeb.Controllers
 {
@@ -25,7 +27,8 @@ namespace WDXDespachoVillaWeb.Controllers
         public string Application_Name = "Despacho Villa";
         public ActionResult Index()
         {
-            return View();
+            List<dtoSeccion> ListadoPagina = new BALSecciones().GetCatalogoSecciones(2).Item3;
+            return View(ListadoPagina);
         }
 
         public ActionResult About()

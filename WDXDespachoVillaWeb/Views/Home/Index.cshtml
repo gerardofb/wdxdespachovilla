@@ -1,5 +1,13 @@
-﻿@{
+﻿@using DTOWDXDespachoVilla.Secciones;
+@model  List<dtoSeccion>
+@{
     ViewBag.Title = "Home Page";
+    string Administrativo = Model.FirstOrDefault(k => k.IdSeccion == 2) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 2).Texto;
+    string Civil = Model.FirstOrDefault(k => k.IdSeccion == 3) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 3).Texto;
+    string Familiar = Model.FirstOrDefault(k => k.IdSeccion == 4) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 4).Texto;
+    string Laboral = Model.FirstOrDefault(k => k.IdSeccion == 5) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 5).Texto;
+    string Penal = Model.FirstOrDefault(k => k.IdSeccion == 6) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 7).Texto;
+    string Mercantil = Model.FirstOrDefault(k => k.IdSeccion == 7) == null ? "" : Model.FirstOrDefault(k => k.IdSeccion == 7).Texto;
 }
 <div class="row">
     <div class="col-md-12" style="z-index:9990;margin-top:100px;">
@@ -15,48 +23,54 @@
         </nav>
         <div class="col-sm-9 col-md-9">
             <div id="main1" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Administrativo</h1>
+                    @Html.Raw(Administrativo)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/administrativo_wdxvilla.jpg" />
                 </div>
             </div>
             <div id="main2" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Civil</h1>
+                    @Html.Raw(Civil)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/civil_wdxvilla.jpg" />
                 </div>
             </div>
             <div id="main3" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Familiar</h1>
+                    @Html.Raw(Familiar)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/familiar_dos_wdxvilla.jpg" />
                 </div>
             </div>
             <div id="main4" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Laboral</h1>
+                    @Html.Raw(Laboral)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/laboral_wdxvilla.jpg" />
                 </div>
             </div>
             <div id="main5" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Mercantil</h1>
+                    @Html.Raw(Mercantil)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/mercantil_wdxvilla.jpg" />
                 </div>
             </div>
             <div id="main6" class="col-md-12">
-                <div class="col-md-8">
+                <div class="col-md-8 SeccionCorta">
                     <h1 class="seccionesMain">Derecho Penal</h1>
+                    @Html.Raw(Penal)
                 </div>
                 <div class="col-md-4">
                     <img src="~/Images/Main/penal_wdxvilla2.jpg" />
@@ -70,9 +84,9 @@
         $('#nav-principal li a').click(function (ev) {
             ev.preventDefault();
             var location = $(this).data('location');
-            var position = $('#'+location).offset();
-            console.log('position '+position.top);
-            $("html, body").animate({ scrollTop: position.top -50 }, 800);
+            var position = $('#' + location).offset();
+            console.log('position ' + position.top);
+            $("html, body").animate({ scrollTop: position.top - 50 }, 800);
         })
     </script>
 }

@@ -54,10 +54,19 @@ namespace WDXDespachoVillaAplicativo.ViewModel.Secciones
                 if(parameter is VMSecciones)
                 {
                     VMSecciones Seccion = this.viewModelPadre.ventanaPadre.ComboSecciones.SelectedItem as VMSecciones;
+                    string TextoSeccion = viewModelPadre.TextoSeccion;
+                    string[] TextoSeparado = TextoSeccion.Split('\n');
+                    TextoSeccion = String.Empty;
+                    string TextoParrafo = @"<p class='SeccionesParrafo'>";
+                    for(int i = 0; i < TextoSeparado.Length; i++)
+                    {
+                        TextoSeccion+= (i== 0?TextoParrafo:"<p>") + TextoSeparado[i] + "</p>";
+                    }
+
                     this.viewModelPadre.SeccionElegida = new VMSecciones
                     {
                         IdSeccion = Seccion.IdSeccion,
-                        TextoSeccion = viewModelPadre.TextoSeccion
+                        TextoSeccion = TextoSeccion
                     };
                     BackgroundWorker worker = new BackgroundWorker();
                     worker.DoWork += new DoWorkEventHandler(this.GuardaSeccionDoWork);
